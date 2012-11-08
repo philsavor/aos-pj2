@@ -39,15 +39,13 @@ public  class ServerSenderThread extends Thread
             
             //determine the port
             int port = 0, rq_num = 0;
-            ///
-            //String host_name = null
-            String host_ip = null;
+            String host_name = null;
+            //String host_ip = null;
             lock.lock();
             
             port = ClientNodes.getNode(Server.sm.getTempNum()).getHostPort();
-            //host_name = Nodes.getNode(RicartAgrawala.sm.getTempNum()).getHostName();
-            ///
-            host_ip = ClientNodes.getNode(Server.sm.getTempNum()).getHostIp();
+            host_name = ClientNodes.getNode(Server.sm.getTempNum()).getHostName();
+            //host_ip = ClientNodes.getNode(Server.sm.getTempNum()).getHostIp();
             rq_num = Server.sm.getTempNum();
             Server.sm.incrementTempNum();
             
@@ -57,7 +55,7 @@ public  class ServerSenderThread extends Thread
             {
             	try 
             	{
-                      echoSocket = new Socket(host_ip, port);
+                      echoSocket = new Socket(host_name, port);
                       out = new PrintWriter(echoSocket.getOutputStream(), true);
                       break;
                 } catch (UnknownHostException e) {

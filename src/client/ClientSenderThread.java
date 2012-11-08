@@ -38,27 +38,28 @@ public  class ClientSenderThread extends Thread
             
             //determine the port
             int port = 0, rq_num = 0 , if_to_server = 0;
-            ///
-            //String host_name = null;
-            String host_ip = null;
+            String host_name = null;
+            //String host_ip = null;
+            
             lock.lock();
+            
             if (Client.sm.getTempNum() < ClientSharedMemory.NODE_NUM  )
             {
             	  if (Client.sm.getTempNum() != ClientSharedMemory.nodeId)
                   {
                   	port = ClientNodes.getNode(Client.sm.getTempNum()).getHostPort();
-                  	//host_name = ClientNodes.getNode(Client.sm.getTempNum()).getHostName();
+                  	host_name = ClientNodes.getNode(Client.sm.getTempNum()).getHostName();
                   	///
-                  	host_ip = ClientNodes.getNode(Client.sm.getTempNum()).getHostIp();
+                  	//host_ip = ClientNodes.getNode(Client.sm.getTempNum()).getHostIp();
                   	rq_num = Client.sm.getTempNum();
                   	Client.sm.incrementTempNum();
                   }else if (Client.sm.getTempNum() != ClientSharedMemory.NODE_NUM -1)
                   {
                   	Client.sm.incrementTempNum();
                   	port = ClientNodes.getNode(Client.sm.getTempNum()).getHostPort();
-                  	//host_name = ClientNodes.getNode(Client.sm.getTempNum()).getHostName();
+                  	host_name = ClientNodes.getNode(Client.sm.getTempNum()).getHostName();
                   	///
-                  	host_ip = ClientNodes.getNode(Client.sm.getTempNum()).getHostIp();
+                  	//host_ip = ClientNodes.getNode(Client.sm.getTempNum()).getHostIp();
                   	rq_num = Client.sm.getTempNum();
                   	Client.sm.incrementTempNum();
                   }else    //case:nodeId = NODE_NUM -1
@@ -67,9 +68,9 @@ public  class ClientSenderThread extends Thread
                 	  
                 	  if_to_server = 1;
                   	  port = ServerNodes.getNode(Client.sm.getServerTempNum()).getHostPort();
-                      //host_name = ClientNodes.getNode(Client.sm.getTempNum()).getHostName();
+                      host_name = ClientNodes.getNode(Client.sm.getTempNum()).getHostName();
                       ///
-                      host_ip = ServerNodes.getNode(Client.sm.getServerTempNum()).getHostIp();
+                      //host_ip = ServerNodes.getNode(Client.sm.getServerTempNum()).getHostIp();
                       rq_num = Client.sm.getServerTempNum();
                       Client.sm.incrementServerTempNum();
                   }
@@ -78,21 +79,20 @@ public  class ClientSenderThread extends Thread
             {
             	if_to_server = 1;
             	port = ServerNodes.getNode(Client.sm.getServerTempNum()).getHostPort();
-              	//host_name = ClientNodes.getNode(Client.sm.getTempNum()).getHostName();
+              	host_name = ServerNodes.getNode(Client.sm.getServerTempNum()).getHostName();
               	///
-              	host_ip = ServerNodes.getNode(Client.sm.getServerTempNum()).getHostIp();
+              	//host_ip = ServerNodes.getNode(Client.sm.getServerTempNum()).getHostIp();
               	rq_num = Client.sm.getServerTempNum();
               	Client.sm.incrementServerTempNum();
             }
             
-          
             lock.unlock();
           
             while(true)
             {
             	try 
             	{
-                      echoSocket = new Socket(host_ip, port);
+                      echoSocket = new Socket(host_name, port);
                       out = new PrintWriter(echoSocket.getOutputStream(), true);
                       break;
                 } catch (UnknownHostException e) {
@@ -196,9 +196,9 @@ public  class ClientSenderThread extends Thread
     	    			 Client.sm.getState() == "CS" &&
     	    			 Client.sm.getIwValue(rq_num) == 0)
     	    	  {
-    	    		  String host_name = ClientNodes.getNode(ClientSharedMemory.nodeId).getHostName();
+    	    		  String _host_name = ClientNodes.getNode(ClientSharedMemory.nodeId).getHostName();
     	    		  temp_string = "< " + ClientSharedMemory.nodeId + " , "
-    	    				        + Client.sm.getCsNum() + " , " + host_name + " >";
+    	    				        + Client.sm.getCsNum() + " , " + _host_name + " >";
      	    		  out.println(temp_string);
      	    		  threadMessage("SENT:" + temp_string);
      	    		  System.out.println("SENT:" + temp_string);
