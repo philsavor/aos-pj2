@@ -46,7 +46,7 @@ public class Server {
 	
 	//to initialize node
 	public static void initializeNode(int nodeId) throws Exception {
-		mainThreadMessage("Server: Initializing system ...\n");
+		//mainThreadMessage("Server: Initializing system ...\n");
 		System.out.println("Server: Initializing system ...\n");
 		
 		//sender threads for all client nodes
@@ -57,7 +57,7 @@ public class Server {
 	
 		
 		//determine the port
-		mainThreadMessage("Server node: " + Integer.toString(ServerSharedMemory.nodeId));
+		//mainThreadMessage("Server node: " + Integer.toString(ServerSharedMemory.nodeId));
 	    int port = ServerNodes.getNode(ServerSharedMemory.nodeId).getHostPort();
 	    
 	    try {
@@ -74,7 +74,7 @@ public class Server {
 	    	(new ServerListenerThread()).start();
 	    }
 	
-	    mainThreadMessage("INIT");
+	    //mainThreadMessage("INIT");
 	    System.out.println("INIT");
 		while(true) 
 	    {

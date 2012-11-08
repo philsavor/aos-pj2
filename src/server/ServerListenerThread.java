@@ -43,7 +43,7 @@ public  class ServerListenerThread extends Thread {
 	            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 	            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-	            threadWriteFile("Server started");
+	            //threadWriteFile("Server started");
 	        
 	            //Main loop
 	            String receive_string;
